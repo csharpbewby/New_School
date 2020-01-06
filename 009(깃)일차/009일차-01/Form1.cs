@@ -324,9 +324,6 @@ namespace _009일차_01
                 for (int k = 0; k < outW; k++)
                     tmpOutImage[i, k] += 127.0;
 
-
-
-
             //임시 출력 --> 출력영상
              for (int i = 0; i < outH; i++)
                 for (int k = 0; k < outW; k++)
@@ -339,10 +336,6 @@ namespace _009일차_01
                     outImage[i, k] = (byte)tmpOutImage[i, k];  // Out <-- In
                 }
                     
-
-
-
-
             //////////////////////////////
             DisplayImage();
         }
@@ -412,10 +405,6 @@ namespace _009일차_01
                         outImage[i, k] = (byte)tmpOutImage[i, k];  // Out <-- In
                 }
 
-
-
-
-
             //////////////////////////////
             DisplayImage();
         }
@@ -479,6 +468,45 @@ namespace _009일차_01
             DisplayImage();
         }
 
+        
+
+        private void Mosaic()  // 모자이크 알고리즘
+        {
+          
+
+            if (fileName.Length <= 0)
+                return;
+            // (중요!) 출력 영상의 크기를 결정
+            outH = inH;
+            outW = inW;
+            Bitmap a = Properties.Resources.a;
+            
+            Bitmap b = new Bitmap(100, 100);
+            Graphics g = Graphics.FromImage(b);
+            outImage = new byte[outH, outW];
+            /////////////////////////////
+            // 진짜 영상처리 알고리즘 구현
+            for (int i = 0; i < inH; i++)
+                for (int k = 0; k < inW; k++)
+                {
+                    Color c = a.GetPixel(i , k );
+                    g.FillRectangle(new SolidBrush(c), i, k, 20, 20);
+
+                    outImage[i, k] = inImage[i, k];  // Out <-- In
+                }
+            //////////////////////////////
+            DisplayImage();
+
+            g.Flush();
+            g.Dispose();
+            g = Graphics.FromImage(a);
+            g.FillEllipse(new TextureBrush(b), 30, 20, 10, 10);
+            g.DrawEllipse(new Pen(Color.Blue, 10), 30, 20, 10, 10);
+            g.Flush();
+            g.Dispose();
+            pb_photo.Image = a;
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -531,6 +559,8 @@ namespace _009일차_01
             HistoEqual();
         }
 
+       
+
         private void 엠보싱ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Emboss();
@@ -548,6 +578,9 @@ namespace _009일차_01
         {
             Paracap();
         }
-
+        private void 모자이ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Mosaic();
+        }
     }
 }

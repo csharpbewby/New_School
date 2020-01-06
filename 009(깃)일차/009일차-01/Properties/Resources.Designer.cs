@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Drawing;
+
 namespace _009일차_01.Properties
 {
 
@@ -33,6 +35,8 @@ namespace _009일차_01.Properties
         internal Resources()
         {
         }
+
+        public static Bitmap a { get; internal set; }
 
         /// <summary>
         ///   이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
